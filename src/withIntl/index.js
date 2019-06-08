@@ -35,7 +35,7 @@ const getIntlMethods = intl => {
     return {t, tx};
 };
 
-export const useT = () => {
+export const useIntl = () => {
     const {intl} = useContext(IntlContext);
 
     return getIntlMethods(intl);

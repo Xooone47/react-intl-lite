@@ -1,10 +1,10 @@
 /**
  * @file Hook用法demo
  */
-import {useT} from 'react-intl-lite';
+import {useIntl} from 'react-intl-lite';
 
 const HookChild = ({onToggle}) => {
-    const {t, tx} = useT();
+    const {t, tx} = useIntl();
     return (
         <div>
             <h2>{t('国际化')} - Hook</h2>
