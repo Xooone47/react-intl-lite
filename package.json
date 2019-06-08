@@ -42,6 +42,7 @@
     "html-webpack-plugin": "^4.0.0-beta.3",
     "husky": "^1.0.1",
     "intl": "^1.2.5",
+    "json-stable-stringify": "^1.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",

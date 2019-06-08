@@ -4,12 +4,30 @@
 import {useContext} from 'react';
 import {injectIntl} from 'react-intl';
 import {wrapDisplayName} from 'recompose';
+import stringify from 'json-stable-stringify';
 import {IntlContext} from '../withIntlProvider';
 
 // eslint-disable-next-line no-empty-function
 const noop = () => {};
 
-const getIntlMethods = intl => {
+const memoize = fn => {
+    const cache = {};
+
+    return (...args) => {
+        const key = stringify(args);
+
+        if (cache[key]) {
+            return cache[key];
+        }
+
+        const result = fn(...args);
+        cache[key] = result;
+
+        return result;
+    };
+};
+
+const getIntlMethodsIn = intl => {
     const {formatMessage, formatDate, formatTime, formatRelative, formatNumber, formatPlural} = intl;
 
     const typeToFunc = {
@@ -34,6 +52,8 @@ const getIntlMethods = intl => {
 
     return {t, tx};
 };
+
+const getIntlMethods = memoize(getIntlMethodsIn);
 
 export const useIntl = () => {
     const {intl} = useContext(IntlContext);
