@@ -5,7 +5,7 @@ import {addLocaleData} from 'react-intl';
 import localeEnData from 'react-intl/locale-data/en';
 import localeZhData from 'react-intl/locale-data/zh';
 
-const formatMessages = (messages, type = 'other') => (
+const formatMessages: object = (messages: object, type: string = 'other') => (
     Object.entries(messages).reduce((result, [key, value]) => {
         if (typeof value === 'string') {
             return {
@@ -27,7 +27,7 @@ const formatMessages = (messages, type = 'other') => (
     }, {})
 );
 
-export default messages => {
+const createLocales: object = (messages: object) => {
     if (typeof messages !== 'object') {
         return {};
     }
@@ -49,3 +49,5 @@ export default messages => {
         'zh-CN': formatMessages(targetMessages[0].messages, 'zh'),
     };
 };
+
+export default createLocales;

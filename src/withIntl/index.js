@@ -1,33 +1,14 @@
 /**
  * @file 封装intl常见场景的高阶组件
  */
-import {useContext} from 'react';
+import {useContext, useMemo} from 'react';
 import {injectIntl} from 'react-intl';
 import {wrapDisplayName} from 'recompose';
-import stringify from 'json-stable-stringify';
 import {IntlContext} from '../withIntlProvider';
 
-// eslint-disable-next-line no-empty-function
 const noop = () => {};
 
-const memoize = fn => {
-    const cache = {};
-
-    return (...args) => {
-        const key = stringify(args);
-
-        if (cache[key]) {
-            return cache[key];
-        }
-
-        const result = fn(...args);
-        cache[key] = result;
-
-        return result;
-    };
-};
-
-const getIntlMethodsIn = intl => {
+const getIntlMethods = intl => {
     const {formatMessage, formatDate, formatTime, formatRelative, formatNumber, formatPlural} = intl;
 
     const typeToFunc = {
@@ -53,15 +34,18 @@ const getIntlMethodsIn = intl => {
     return {t, tx};
 };
 
-const getIntlMethods = memoize(getIntlMethodsIn);
-
 export const useIntl = () => {
     const {intl} = useContext(IntlContext);
 
-    return getIntlMethods(intl);
+    const result = useMemo(
+        () => getIntlMethods(intl),
+        [intl]
+    )
+
+    return result;
 };
 
-export default ComponentIn => {
+const withIntl = ComponentIn => {
     const ComponentOut = props => {
         const {intl} = props;
 
@@ -74,3 +58,5 @@ export default ComponentIn => {
 
     return injectIntl(ComponentOut);
 };
+
+export default withIntl;

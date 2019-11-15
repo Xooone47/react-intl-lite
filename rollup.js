@@ -4,45 +4,23 @@ const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const autoExternal = require('rollup-plugin-auto-external');
 const babel = require('rollup-plugin-babel');
-const uglify = require('rollup-plugin-uglify');
+// const uglify = require('rollup-plugin-uglify');
+const babelrc = require('./babel.config.js');
 
-const babelrc = {
-    presets: [
-        [
-            'env',
-            {
-                'targets': {
-                    'chrome': '45',
-                    'safari': '10'
-                },
-                'exclude': [
-                    'transform-regenerator',
-                    'transform-async-to-generator'
-                ],
-                'modules': false,
-                'useBuiltIns': 'entry',
-                'debug': false
-}
-        ],
-        'stage-1',
-        'react'
-    ],
-    'plugins': [
-        'react-require',
-        'external-helpers',
-        "transform-decorators-legacy",
-        "lodash"
-    ]
+const babelConfigs = {
+    ...babelrc,
+    exclude: 'node_modules/**',
+    extensions: ['.js', '.ts']
 };
 
 const inputOptions = {
     input: 'src/index.js',
     plugins: [
-        resolve({main: true, module: true}),
+        resolve({main: true, module: true, extensions: ['.js', '.json', '.ts']}),
         commonjs({include: 'node_modules/**'}),
         autoExternal({dependencies: false}),
-        babel({exclude: 'node_modules/**', babelrc: false, ...babelrc}),
-        uglify()
+        babel({babelrc: false, ...babelConfigs}),
+        // uglify()
     ],
     external: ['lodash', 'react', 'react-dom']
 };

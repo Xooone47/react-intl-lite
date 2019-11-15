@@ -2,7 +2,7 @@
  * @file 国际化组件Demo
  */
 import {useState, useCallback} from 'react';
-import {withIntlProvider, withIntl} from 'react-intl-lite';
+import {withIntlProvider} from 'react-intl-lite';
 import messages from '../messages/en-US.messages';
 import HookChildRaw from './HookChild';
 import HocChildRaw from './HocChild';

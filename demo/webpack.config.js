@@ -17,7 +17,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.(js|ts)$/,
                 exclude: /node_modules/,
                 use: [
                     {
@@ -35,7 +35,7 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.js'],
+        extensions: ['.js', '.ts'],
         modules: ['node_modules'],
         alias: {
             'react-intl-lite': path.resolve(__dirname, '../src/')

@@ -36,7 +36,7 @@ const IntlCom = injectIntl(
 
 export {IntlContext};
 
-export default (originMessages, options = {}) => ComponentIn => {
+const withIntlProvider =  (originMessages, options = {}) => ComponentIn => {
     const locales = createLocales(originMessages);
 
     const ComponentOut = ({language, ...otherProps}) => {
@@ -67,3 +67,5 @@ export default (originMessages, options = {}) => ComponentIn => {
 
     return ComponentOut;
 };
+
+export default withIntlProvider;
